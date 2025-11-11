@@ -6,6 +6,13 @@ const createExpense = async (req, res) => {
     try {
         const data = req.body;
 
+        if (data == null || Object.keys(data).length < 2 || !("name" in data) || !("amount" in data)) {
+            console.log("Invalid Data!");
+            return res.status(422).json({
+                success : false,
+                description : "Invalid Data!"
+            });
+        }
         const id = await db_services.createExpense(data);
 
         console.log(`Successfully created new Expense!`);
@@ -39,7 +46,7 @@ const deleteExpense = async (req, res) => {
         await db_services.deleteExpenseById(del_id);
 
         console.log(`Successfully Deleted Expense with ID ${del_id}`);
-        return res.status(204).json({
+        return res.status(200).json({
             success : true,
             description : `Deleted Expense with id ${del_id}!`
         });
@@ -107,6 +114,14 @@ const updateExpenseById = async (req, res) => {
     try {
         const data = req.body;
         const upd_id = req.params.id;
+
+        if (data == null || Object.keys(data).length < 2 || !("name" in data) || !("amount" in data)) {
+            console.log("Invalid Data!");
+            return res.status(422).json({
+                success : false,
+                description : "Invalid Data!"
+            });
+        }
 
         if (!ObjectId.isValid(upd_id)) {
             console.error("ID is not valid!");
