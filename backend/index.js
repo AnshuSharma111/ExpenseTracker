@@ -6,6 +6,9 @@ const cors = require('cors');
 
 // Router imports
 const expenseRoutes = require('./Routers/expenseRoutes.js');
+const userRoutes = require('./Routers/userRoutes.js');
+
+const { authenticate } = require('./Services/authenticate.js');
 
 dotenv.config();
 
@@ -34,6 +37,10 @@ const app = express();
 app.use(express.json()); // to parse request with JSON payload and put into req.body
 app.use(express.urlencoded({extended : true})); // to parse rquests with URL-encoded payloads, like app/x-www-form-urlencoded
 app.use(cors()); // Allow requests from other ports
+
+app.use("/user", userRoutes); // login and signup
+
+app.use(authenticate); // apply authenticate middleware to all routes (except user)
 
 // Routes
 app.use("/expense", expenseRoutes);
