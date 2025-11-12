@@ -7,7 +7,7 @@ const createExpense = async (req, res) => {
         const data = req.body;
 
         if (data == null || Object.keys(data).length < 2 || !("name" in data) || !("amount" in data)) {
-            console.log("Invalid Data!");
+            console.error("Invalid Data!");
             return res.status(422).json({
                 success : false,
                 description : "Invalid Data!"
@@ -50,8 +50,7 @@ const deleteExpense = async (req, res) => {
             success : true,
             description : `Deleted Expense with id ${del_id}!`
         });
-    }
-    catch (e) {
+    } catch (e) {
         console.error(`Unable to delete Expense!\n\nError: ${e}`);
         return res.status(500).json({
             success : false,
@@ -80,8 +79,7 @@ const getExpenseById = async (req, res) => {
             description : "Successfully fetched record!",
             data : data
         });
-    }
-    catch (e) {
+    } catch (e) {
         console.error(`Unable to fetch Expense!\n\nError: ${e}`);
         return res.status(500).json({
             success : false,
@@ -100,8 +98,7 @@ const getAllExpenses = async (req, res) => {
             description : "Successfully fetched all data!",
             data : data
         });
-    }
-    catch (e) {
+    } catch (e) {
         console.error(`Unable to fetch Expenses!\n\nError: ${e}`);
         return res.status(500).json({
             success : false,
@@ -116,7 +113,7 @@ const updateExpenseById = async (req, res) => {
         const upd_id = req.params.id;
 
         if (data == null || Object.keys(data).length < 2 || !("name" in data) || !("amount" in data)) {
-            console.log("Invalid Data!");
+            console.error("Invalid Data!");
             return res.status(422).json({
                 success : false,
                 description : "Invalid Data!"
@@ -148,8 +145,7 @@ const updateExpenseById = async (req, res) => {
             success : true,
             description : "Successfully updated data of Expense!"
         });
-    }
-    catch (e) {
+    } catch (e) {
         console.error(`Unable to update Expense!\n\nError: ${e}`);
         return res.status(500).json({
             success : false,

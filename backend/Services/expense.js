@@ -19,7 +19,7 @@ const deleteExpenseById = async (id) => {
 };
 
 const updateExpenseById = async (id, data) => {
-    return Expense.findByIdAndUpdate(id, data, {new : true})
+    return Expense.findByIdAndUpdate(id, data, {new : true});
 };
 
 module.exports = {
