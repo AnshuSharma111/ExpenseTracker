@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const db_services = require("../Services/blacklist.js");
 
 dotenv.config();
 
@@ -17,6 +18,16 @@ const authenticate = async (req, res, next) => {
         }
 
         const token = auth.split(" ")[1];
+
+        const is_blacklisted = await db_services.isBlacklistToken(token);
+        if (is_blacklisted) {
+            console.error("Unauthorized Access!");
+            return res.status(401).json({
+                success : false,
+                description : "Unauthorized Access!"
+            });
+        }
+
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = decoded;
 

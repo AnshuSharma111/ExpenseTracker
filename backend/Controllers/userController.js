@@ -1,4 +1,5 @@
-const db_services = require('../Services/user.js');
+const user_db_services = require('../Services/user.js');
+const token_db_services = require('../Services/blacklist.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
@@ -17,7 +18,7 @@ const signup = async (req, res) => {
             });
         }        
 
-        const existing_user = await db_services.getUserByUsername(data.username);
+        const existing_user = await user_db_services.getUserByUsername(data.username);
         if (existing_user != null) {
             console.error("User with username already exists!");
             return res.status(409).json({
@@ -28,7 +29,7 @@ const signup = async (req, res) => {
 
         const hashed_pass = await bcrypt.hash(data.password, 10);
         const new_user = { username : data.username, password : hashed_pass};
-        const id = await db_services.createUser(new_user);
+        const id = await user_db_services.createUser(new_user);
 
         const token = jwt.sign({ user_id : id, username : data.username }, process.env.JWT_SECRET, { expiresIn : '24h' });
 
@@ -46,7 +47,7 @@ const signup = async (req, res) => {
             description : "Internal Server Error"
         });
     }
-}
+};
 
 const login = async (req, res) => {
     try {
@@ -60,7 +61,7 @@ const login = async (req, res) => {
             });
         }
 
-        const existing_user = await db_services.getUserByUsername(data.username);
+        const existing_user = await user_db_services.getUserByUsername(data.username);
         if (existing_user == null) {
             console.error("Invalid Login!");
             return res.status(401).json({
@@ -97,9 +98,39 @@ const login = async (req, res) => {
             description : "Internal Server Error"
         });
     }
-}
+};
+
+const logout = async (req, res) => {
+    try {
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+            console.error("Unauthorized Access!");
+            return res.status(401).json({ 
+                success: false,
+                description: "Unauthorized Access!" 
+            });
+        }
+
+        const token = authHeader.split(" ")[1];
+        const id = await token_db_services.createNewBlacklistToken(token);
+
+        console.log("Successfully logged user out!");
+        res.status(200).json({
+            success : true,
+            description : "Successfully logged user out!",
+            id : id
+        });
+    } catch (e) {
+        console.error(`Unable to log user out!\n\nError : ${e}`);
+        res.status(500).json({
+            success : false,
+            description : "Internal Server Error"
+        });
+    }
+};
 
 module.exports = {
     login,
-    signup
+    signup,
+    logout
 };

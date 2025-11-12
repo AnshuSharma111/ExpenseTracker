@@ -38,12 +38,9 @@ app.use(express.json()); // to parse request with JSON payload and put into req.
 app.use(express.urlencoded({extended : true})); // to parse rquests with URL-encoded payloads, like app/x-www-form-urlencoded
 app.use(cors()); // Allow requests from other ports
 
-app.use("/user", userRoutes); // login and signup
-
-app.use(authenticate); // apply authenticate middleware to all routes (except user)
-
 // Routes
-app.use("/expense", expenseRoutes);
+app.use("/user", userRoutes); // login and signup (no need for authorization)
+app.use("/expense", authenticate, expenseRoutes);
 
 // Route to test if server is up
 app.get('/', (req, res) => {
