@@ -42,6 +42,15 @@ app.use(cors()); // Allow requests from other ports
 app.use("/user", userRoutes); // login and signup (no need for authorization)
 app.use("/expense", authenticate, expenseRoutes);
 
+// Quick token verification route
+app.post('/verify', authenticate, (req, res) => {
+    res.status(200).json({
+        success: true, 
+        message: "Token is valid!", 
+        user: req.user 
+    });
+});
+
 // Route to test if server is up
 app.get('/', (req, res) => {
     res.send(`Server is live on port backend:  http://localhost:${PORT}\n`);
