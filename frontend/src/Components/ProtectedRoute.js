@@ -15,9 +15,11 @@ const ProtectedRoute = ({ children }) => {
             }
 
             try {
-                const res = await fetch("http://localhost:500/verify", {
+                const res = await fetch("http://localhost:5000/verify", {
                     method : "POST",
-                    headers : { Authorization: `Bearer ${token}` }, 
+                    headers : { 
+                        Authorization: `Bearer ${token}`
+                    } 
                 });
 
                 if (res.status === 200) {

@@ -53,7 +53,7 @@ app.post('/verify', authenticate, (req, res) => {
 
 // Route to test if server is up
 app.get('/', (req, res) => {
-    res.send(`Server is live on port backend:  http://localhost:${PORT}\n`);
+    res.send(`Server is live on port backend: http://localhost:${PORT}\n`);
 })
 
 mongoose.connect(MONGO_URI)
