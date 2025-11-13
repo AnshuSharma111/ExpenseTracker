@@ -65,6 +65,8 @@ function Login() {
             const token = data.token;
 
             localStorage.setItem("token", token);
+            localStorage.setItem("user_id", data.id);
+
             console.log("User logged in successfully!");
             navigate("/home");
 

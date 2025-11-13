@@ -10,8 +10,8 @@ const getAllExpenses = async () => {
     return Expense.find();
 };
 
-const getExpenseById = async (id) => {
-    return Expense.findOne({_id: id});
+const getExpensesById = async (id) => {
+    return Expense.find({user: id});
 };
 
 const deleteExpenseById = async (id) => {
@@ -24,7 +24,7 @@ const updateExpenseById = async (id, data) => {
 
 module.exports = {
     getAllExpenses,
-    getExpenseById,
+    getExpensesById,
     deleteExpenseById,
     updateExpenseById,
     createExpense

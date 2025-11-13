@@ -81,6 +81,8 @@ function Signup () {
             const token = data.token;
 
             localStorage.setItem("token", token);
+            localStorage.setItem("user_id", data.id);
+
             console.log("User signed up successfully!");
             navigate("/home");
         } catch (e) {

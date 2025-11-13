@@ -6,7 +6,7 @@ const createExpense = async (req, res) => {
     try {
         const data = req.body;
 
-        if (data == null || Object.keys(data).length < 2 || !("name" in data) || !("amount" in data)) {
+        if (data == null || Object.keys(data).length < 3 || !("user" in data) || !("name" in data) || !("amount" in data)) {
             console.error("Invalid Data!");
             return res.status(422).json({
                 success : false,
@@ -59,7 +59,7 @@ const deleteExpense = async (req, res) => {
     }
 };
 
-const getExpenseById = async (req, res) => {
+const getExpensesById = async (req, res) => {
     try {
         const id = req.params.id;
         
@@ -71,7 +71,7 @@ const getExpenseById = async (req, res) => {
             })
         }
 
-        const data = await db_services.getExpenseById(id);
+        const data = await db_services.getExpensesById(id);
 
         console.log(`Successfully fetched Expense!`);
         return res.status(200).json({
@@ -112,7 +112,7 @@ const updateExpenseById = async (req, res) => {
         const data = req.body;
         const upd_id = req.params.id;
 
-        if (data == null || Object.keys(data).length < 2 || !("name" in data) || !("amount" in data)) {
+        if (data == null || Object.keys(data).length < 3 || !("user" in data) || !("name" in data) || !("amount" in data)) {
             console.error("Invalid Data!");
             return res.status(422).json({
                 success : false,
@@ -157,7 +157,7 @@ const updateExpenseById = async (req, res) => {
 module.exports = {
     createExpense,
     deleteExpense,
-    getExpenseById,
+    getExpensesById,
     getAllExpenses,
     updateExpenseById
 };
