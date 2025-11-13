@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import{ useNavigate } from "react-router-dom";
+import ExpenseCard from "../Components/ExpenseCard.js";
+import "./Home.css";
 
 function Home() {
     const [ err, setError ] = useState(null);
@@ -158,8 +160,8 @@ function Home() {
             <br />
             <p>{err}</p>
             <br />
-            <div>
-                <h2>Create New Expense!</h2>
+            <h2>Create New Expense!</h2>
+            <div className="box">
                 <form onSubmit={onCreateExpense}>
                     <label>
                         Name
@@ -194,7 +196,11 @@ function Home() {
             </div>
             <br />
             <div>
-                <p>{JSON.stringify(expenses)}</p>
+                <h2>Your Expenses</h2>
+
+                {expenses.map((expense, index) => (
+                    <ExpenseCard key={index} expense={expense} />
+                ))}
             </div>
         </div>
     );
