@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
@@ -6,6 +6,34 @@ function Login() {
     const [ password, setPassword ] = useState("");
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const verify_token = async () => {
+            const saved_token = localStorage.getItem("token");
+            if (!saved_token) {
+                return;
+            }
+
+            try {
+                const verify_token = await fetch("http://localhost:5000/verify", {
+                        method : "POST",
+                        headers : {
+                            Authorization: `Bearer ${saved_token}`
+                        } 
+                    });
+    
+                if (verify_token.status === 200) {
+                    console.log("User already logged in!");
+                    navigate("/home");
+                    return;
+                }
+            } catch (e) {
+                console.error(`Could not verify token!\n\nError:  ${e}`);
+            }
+        };
+
+        verify_token();
+    }, [navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -58,9 +86,11 @@ function Login() {
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                 </label>
                 <br />
-                <button type="submit">Sign Up</button>
+                <button type="submit">Log In</button>
             </form>
             <br />
+            <p>Don't have an account? Sign up now!</p>
+            <button onClick = {() => navigate("/signup")}>Sign Up</button>
             <p>{error}</p>
         </div>
     );
