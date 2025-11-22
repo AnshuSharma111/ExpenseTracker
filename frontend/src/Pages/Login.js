@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Login.css";
 
 function Login() {
     const [ username, setUsername ] = useState("");
@@ -75,25 +76,25 @@ function Login() {
         }
     }
     return (
-        <div>
+        <div className = "login-div">
             <h1>Log In to Expense Tracker</h1>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Username:
-                    <input type="text" value={username} onChange={(e) => setUsername(e.target.value)}/>
-                </label>
-                <br/>
-                <label>
-                    Password:
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                </label>
-                <br />
-                <button type="submit">Log In</button>
-            </form>
+            <div className="form-wrapper">
+                <form onSubmit={handleSubmit}>
+                    <label className="field">
+                        Username
+                        <input type="text" className="field-input" value={username} onChange={(e) => setUsername(e.target.value)}/>
+                    </label>
+                    <label className="field">
+                        Password
+                        <input type="password" className="field-input" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    </label>
+                    <button type="submit" className="button">Log In</button>
+                </form>
+            </div>
             <br />
-            <p>Don't have an account? Sign up now!</p>
-            <button onClick = {() => navigate("/signup")}>Sign Up</button>
-            <p>{error}</p>
+            <p>Don't have an account? <b>Sign up now!</b></p>
+            <button onClick = {() => navigate("/signup")} className="button">Sign Up</button>
+            <p><b>{error}</b></p>
         </div>
     );
 }

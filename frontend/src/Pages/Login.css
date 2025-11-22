@@ -1,0 +1,57 @@
+.form-wrapper {
+    /* flex affects the children of the container. so we are centering the children, not the div */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 5px black solid;
+    padding: 10px;
+    background: bisque;
+
+    /* now here we are centering the actual div*/
+    width: 500px;
+    height: 100px;
+    margin: 0 auto;
+}
+
+.field {
+    margin-bottom: 7px;
+    display: block;
+}
+
+.field-input {
+    margin-left: 10px;
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.login-div {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.signup-div {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.button {
+    padding: 10px;
+    border-radius: 20px;
+    background: transparent;
+}
+
+.button:hover {
+    background: burlywood;
+    cursor: pointer;
+}
+
+.button:active {
+    background: coral;
+}
+
+body {
+    background-color: blanchedalmond;
+
+}
